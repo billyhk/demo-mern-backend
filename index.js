@@ -9,6 +9,9 @@ const {
 	handleValidationErrors,
 } = require('./middleware/custom_errors');
 
+// Require the user resource routes and controllers
+const userController = require('./controllers/users');
+
 // Require the job resource routes and controllers
 const jobController = require('./controllers/jobs');
 
@@ -29,6 +32,8 @@ app.use(express.json());
 // The urlencoded middleware parses requests which use
 // a specific content type (such as when using Axios)
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api', userController);
 
 // Configure the route middleware
 app.use('/api/jobs', jobController);
