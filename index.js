@@ -3,6 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+// Require the error handlers
+const {
+	handleErrors,
+	handleValidationErrors,
+} = require('./middleware/custom_errors');
+
 // Require the job resource routes and controllers
 const jobController = require('./controllers/jobs');
 
@@ -26,6 +32,11 @@ app.use(express.urlencoded({ extended: true }));
 
 // Configure the route middleware
 app.use('/api/jobs', jobController);
+
+app.use(handleValidationErrors);
+// The catch all for handling errors
+// MUST BE PLACED IMMEDIATELY BEFORE `app.listen`
+app.use(handleErrors);
 
 // Define a port for API to run on, if the environment
 // variable called `PORT` is not found use port 4000
